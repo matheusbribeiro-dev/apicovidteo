@@ -22,11 +22,11 @@ class DeathController extends Controller
 
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $deaths = $this->model->all();
+        $deaths = $this->model->orderByDesc('id')->limit(1)->get();
 
         try {
             if (count($deaths) > 0) {
-                return response()->json($deaths, Response::HTTP_OK);
+                return response()->json($deaths[0], Response::HTTP_OK);
             } else {
                 return response()->json([], Response::HTTP_OK);
             }

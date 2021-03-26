@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cases;
+use App\Models\User;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Crypt;
 use Symfony\Component\HttpFoundation\Response;
 
 class CaseController extends Controller
@@ -22,11 +24,11 @@ class CaseController extends Controller
 
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $cases = $this->model->all();
+        $cases = $this->model->orderByDesc('id')->limit(1)->get();
 
         try {
             if (count($cases) > 0) {
-                return response()->json($cases, Response::HTTP_OK);
+                return response()->json($cases[0], Response::HTTP_OK);
             } else {
                 return response()->json([], Response::HTTP_OK);
             }

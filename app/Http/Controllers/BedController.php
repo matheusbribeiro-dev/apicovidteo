@@ -22,11 +22,11 @@ class BedController extends Controller
 
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $beds = $this->model->all();
+        $beds = $this->model->orderByDesc('id')->limit(1)->get();;
 
         try {
             if (count($beds) > 0) {
-                return response()->json($beds, Response::HTTP_OK);
+                return response()->json($beds[0], Response::HTTP_OK);
             } else {
                 return response()->json([], Response::HTTP_OK);
             }

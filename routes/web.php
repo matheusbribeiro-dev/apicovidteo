@@ -20,3 +20,16 @@ $router->group(['prefix' => 'dados'], function () use($router) {
     $router->get('/vacina', 'VaccineController@index');
 });
 
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use($router) {
+    $router->post('/create-case', 'Admin\\CaseController@index');
+    $router->post('/create-death', 'Admin\\DeathController@index');
+    $router->post('/create-hospitalizations', 'Admin\\HospController@index');
+    $router->post('/create-beds', 'Admin\\BedsController@index');
+    $router->post('/create-vaccine', 'Admin\\VaccineController@index');
+});
+
+$router->group(['prefix' => 'api'], function () use($router) {
+    $router->post('/login', 'Admin\\AuthController@login');
+    $router->post('/register', 'Admin\\AuthController@register');
+});
+
